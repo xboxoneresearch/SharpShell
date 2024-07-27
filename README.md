@@ -35,3 +35,7 @@ To then process your updated code into a workable payload, the build process for
 Building regularly through Visual Studio will invoke analyzers that take *ages* to run on the auto-generated dependencies file,
 so if you value your time follow this guideline to retain reasonable build times.
 - Copy the built `SharpShell.Loader.dll` next to `run_pwsh.xml` to then be able to invoke the loader through the normal `<path to dotnet.exe> msbuild <path to run_pwsh.xml>` command.
+
+## Credits
+
+- **Shadow LAG**, for discovering and implementing the initial MSBuild entrypoint and .NET loader
