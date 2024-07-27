@@ -1,6 +1,6 @@
 # SharpShell
 
-A bootstrapper to get PowerShell running on your Xbox console-
+A bootstrapper to get PowerShell running on your Xbox One / Series console.
 
 ## Installation Requirements
 
