@@ -16,19 +16,16 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
-
     - name: Build just SharpShell
       working-directory: ./SharpShell
-      run: dotnet publish -c Release /p:PublishProfile=DeployPublish --no-restore
+      run: dotnet publish -c Release /p:PublishProfile=DeployPublish
 
     - name: Generate dependency
       run: python generate_embedded.py
 
     - name: Build
       working-directory: ./SharpShell.Loader
-      run: dotnet build -c Debug /p:RunAnalyzers=false --no-restore
+      run: dotnet build -c Debug /p:RunAnalyzers=false
 
     - name: Package
       run: |
