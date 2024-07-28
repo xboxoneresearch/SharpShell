@@ -22,7 +22,7 @@ Get a remote shell (most likely using [collateral-damage](https://github.com/exp
 then run `pwsh.bat`.
 
 If everything went smoothly, you should now be dropped into a PowerShell prompt.
-If you a message regarding an "Internal CLR exception", just try to run it a few more times and/or restart your console. 
+If you get a message regarding an "Internal CLR exception", just try to run it a few more times and/or restart your console. 
 This can be a bit unstable at times.
 
 ## For developers
