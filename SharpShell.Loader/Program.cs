@@ -27,7 +27,12 @@ namespace SharpShell.Loader
                     return AssemblyLoadContext.Default.LoadFromStream(ms);
                 }
 
-                var dllLocalPath = Path.Combine(rootPath, name + ".dll");
+                var dllLocalPath = Path.Combine(Directory.GetCurrentDirectory(), name + ".dll");
+                if (!File.Exists(dllLocalPath)) {
+                    // File does exist in current dir, let's assemble path with pwsh root
+                    dllLocalPath = Path.Combine(rootPath, name + ".dll");
+                }
+
                 if (BlacklistedDependencies.Contains(name))
                     return AssemblyLoadContext.Default.LoadFromAssemblyPath(dllLocalPath);
 
