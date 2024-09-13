@@ -32,8 +32,8 @@ jobs:
         mkdir release\pwsh
         xcopy README.md release\
         xcopy pwsh.bat release\
-        xcopy run_pwsh.xml release\pwsh\
         xcopy SharpShell.Loader\bin\Debug\net6.0\SharpShell.Loader.dll release\pwsh\
+        xcopy SharpShell.Loader\bin\Debug\net6.0\SharpShell.Loader.runtimeconfig.json release\pwsh\
 
         7z a -tzip SharpShell.zip .\release\*
 

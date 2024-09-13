@@ -8,6 +8,8 @@ namespace SharpShell.Loader
     {
         // See generate_embedded.py
         private static readonly string[] BlacklistedDependencies = ["System.Management.Automation"];
+        private static readonly string rootPath = Environment.GetEnvironmentVariable("PWSH_ROOT_PATH")
+                ?? throw new Exception("No PWSH_ROOT_PATH env variable found!");
 
         static void Main(string[] args)
         {
@@ -25,7 +27,7 @@ namespace SharpShell.Loader
                     return AssemblyLoadContext.Default.LoadFromStream(ms);
                 }
 
-                var dllLocalPath = Path.Combine(Directory.GetCurrentDirectory(), name + ".dll");
+                var dllLocalPath = Path.Combine(rootPath, name + ".dll");
                 if (BlacklistedDependencies.Contains(name))
                     return AssemblyLoadContext.Default.LoadFromAssemblyPath(dllLocalPath);
 
