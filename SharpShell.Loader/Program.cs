@@ -42,7 +42,7 @@ namespace SharpShell.Loader
             var shell = Assembly.Load("SharpShell");
             var program = shell.GetType("SharpShell.Program")!;
             var main = program.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic)!;
-            main.Invoke(null, [Array.Empty<string>()]);
+            main.Invoke(null, [args]);
         }
     }
 }

